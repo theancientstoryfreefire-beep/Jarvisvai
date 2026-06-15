@@ -38,12 +38,12 @@ jobs:
       - name: Fix Gradle version
         run: |
           cd android
-          sed -i 's/gradle-9.3.1/gradle-8.5/g' gradle/wrapper/gradle-wrapper.properties
+          sed -i 's/gradle-9.3.1/gradle-8.9/g' gradle/wrapper/gradle-wrapper.properties
       
       - name: Build APK
         run: |
           cd android
-          ./gradlew assembleRelease
+          ./gradlew clean assembleRelease --stacktrace --info
       
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
