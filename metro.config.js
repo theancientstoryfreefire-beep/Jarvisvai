@@ -1,3 +1,22 @@
 const { getDefaultConfig } = require("expo/metro-config");
 
-module.exports = getDefaultConfig(__dirname);
+const config = getDefaultConfig(__dirname);
+
+// Fix for expo-router package exports issue
+config.resolver = {
+  ...config.resolver,
+  extraNodeModules: {},
+  sourceExts: ["ts", "tsx", "js", "jsx", "json", "mjs"],
+};
+
+config.transformer = {
+  ...config.transformer,
+  getTransformOptions: async () => ({
+    transform: {
+      experimentalImportSupport: false,
+      inlineRequires: true,
+    },
+  }),
+};
+
+module.exports = config;
