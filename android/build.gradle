@@ -4,11 +4,13 @@ buildscript {
   repositories {
     google()
     mavenCentral()
+    maven { url "https://maven.pkg.github.com/expo/expo-gradle-plugin" }
   }
   dependencies {
     classpath('com.android.tools.build:gradle')
     classpath('com.facebook.react:react-native-gradle-plugin')
     classpath('org.jetbrains.kotlin:kotlin-gradle-plugin')
+    classpath('expo.modules:expo-modules-gradle-plugin')
   }
 }
 
@@ -17,6 +19,7 @@ allprojects {
     google()
     mavenCentral()
     maven { url 'https://www.jitpack.io' }
+    maven { url "https://maven.pkg.github.com/expo/expo-gradle-plugin" }
   }
 }
 
