@@ -30,13 +30,10 @@ jobs:
           java-version: '17'
       
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --shamefully-hoist
       
       - name: Install Expo CLI globally
         run: pnpm add -g expo-cli
-      
-      - name: Fix Autolinking Paths
-        run: npx expo install expo-modules-autolinking
       
       - name: Clean Gradle cache
         run: |
