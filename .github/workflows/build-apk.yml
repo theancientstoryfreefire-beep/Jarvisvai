@@ -45,39 +45,20 @@ jobs:
       - name: Install Expo CLI globally
         run: npm install -g expo-cli
       
-      - name: Make gradlew executable
-        run: chmod +x android/gradlew || true
-
-      - name: Verify Java and Gradle
-        run: |
-          java -version
-          if [ -d "android" ]; then
-            cd android
-            ./gradlew -v || echo "Gradle not found or failed"
-          else
-            echo "Android directory not found"
-          fi
-
-      - name: Clean Gradle cache
-        env:
-          GRADLE_USER_HOME: ${{ runner.temp }}/.gradle
-        run: |
-          rm -rf $GRADLE_USER_HOME/caches || true
-          rm -rf android/.gradle || true
-          if [ -d "android" ]; then
-            cd android
-            ./gradlew clean || echo "Clean failed"
-          fi
-
       - name: Prebuild Android
         run: npx expo prebuild --platform android --clean --no-install
+
+      - name: Make gradlew executable
+        run: chmod +x android/gradlew || true
 
       - name: Build APK (debug logs saved)
         env:
           GRADLE_USER_HOME: ${{ runner.temp }}/.gradle
+          JAVA_TOOL_OPTIONS: "-Xmx1536m"
         run: |
           cd android
-          ./gradlew assembleRelease --no-daemon --stacktrace --debug > build-gradle.log 2>&1 || (tail -n 200 build-gradle.log && exit 1)
+          chmod +x ./gradlew || true
+          ./gradlew assembleRelease --no-daemon --stacktrace --info > build-gradle.log 2>&1 || (echo "==== Build failed: showing first 400 lines of log ====" && head -n 400 build-gradle.log && echo "==== Last 200 lines of log ====" && tail -n 200 build-gradle.log && exit 1)
           echo "==== Gradle log tail ===="
           tail -n 200 build-gradle.log || true
 
