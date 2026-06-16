@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '11'
       
       - name: Install dependencies
         run: npm install --legacy-peer-deps
@@ -29,19 +29,48 @@ jobs:
       - name: Install Expo CLI globally
         run: npm install -g expo-cli
       
-      - name: Clean Gradle cache
+      - name: Make gradlew executable
+        run: chmod +x android/gradlew || true
+
+      - name: Verify Java and Gradle
         run: |
-          rm -rf ~/.gradle/caches
-          rm -rf android/.gradle
-          cd android && ./gradlew clean
-      
+          java -version
+          if [ -d "android" ]; then
+            cd android
+            ./gradlew -v || echo "Gradle not found or failed"
+          else
+            echo "Android directory not found"
+          fi
+
+      - name: Clean Gradle cache
+        env:
+          GRADLE_USER_HOME: ${{ runner.temp }}/.gradle
+        run: |
+          rm -rf $GRADLE_USER_HOME/caches || true
+          rm -rf android/.gradle || true
+          if [ -d "android" ]; then
+            cd android
+            ./gradlew clean || echo "Clean failed"
+          fi
+
       - name: Prebuild Android
         run: npx expo prebuild --platform android --clean --no-install
-      
-      - name: Build APK
+
+      - name: Build APK (debug logs saved)
+        env:
+          GRADLE_USER_HOME: ${{ runner.temp }}/.gradle
         run: |
           cd android
-          ./gradlew clean assembleRelease --stacktrace --info
+          ./gradlew assembleRelease --no-daemon --stacktrace --debug > build-gradle.log 2>&1 || (tail -n 200 build-gradle.log && exit 1)
+          echo "==== Gradle log tail ===="
+          tail -n 200 build-gradle.log || true
+
+      - name: Upload Gradle Log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-build-log
+          path: android/build-gradle.log
       
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
