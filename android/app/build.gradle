@@ -114,6 +114,10 @@ android {
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
             
+            // Explicitly ensure debug signing is used for this release build
+            // to avoid "signing configuration not found" errors in CI.
+            // signingConfig signingConfigs.debug (already set above, but being explicit)
+            
             // Temporarily disabled for stability during build
             minifyEnabled false
             shrinkResources false
