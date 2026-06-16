@@ -152,6 +152,12 @@ android {
     }
 }
 
+configurations.all {
+    exclude group: 'xerces', module: 'xercesimpl'
+    exclude group: 'net.sf.kxml', module: 'kxml2'
+    exclude group: 'com.google.code.findbugs', module: 'jsr305'
+}
+
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
