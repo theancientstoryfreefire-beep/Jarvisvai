@@ -36,7 +36,7 @@ jobs:
         run: pnpm add -g expo-cli
       
       - name: Fix Autolinking Paths
-        run: pnpm exec expo install expo-modules-autolinking
+        run: npx expo install expo-modules-autolinking
       
       - name: Clean Gradle cache
         run: |
