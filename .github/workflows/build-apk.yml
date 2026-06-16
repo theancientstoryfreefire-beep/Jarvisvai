@@ -12,16 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 9
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'pnpm'
+          cache: 'npm'
       
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -30,10 +25,10 @@ jobs:
           java-version: '17'
       
       - name: Install dependencies
-        run: pnpm install --shamefully-hoist
+        run: npm install
       
       - name: Install Expo CLI globally
-        run: pnpm add -g expo-cli
+        run: npm install -g expo-cli
       
       - name: Clean Gradle cache
         run: |
