@@ -66,11 +66,12 @@ jobs:
       - name: Build APK (debug logs saved)
         env:
           GRADLE_USER_HOME: ${{ runner.temp }}/.gradle
-          JAVA_TOOL_OPTIONS: "-Xmx1536m"
+          JAVA_TOOL_OPTIONS: "-Xmx4096m"
         run: |
           cd android
+          echo "org.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8" >> gradle.properties
           chmod +x ./gradlew || true
-          ./gradlew assembleRelease --no-daemon --stacktrace --info > build-gradle.log 2>&1 || (echo "==== Build failed: full gradle log ====" && sed -n '1,10000p' build-gradle.log && exit 1)
+          ./gradlew assembleRelease --no-daemon --no-parallel --stacktrace --info > build-gradle.log 2>&1 || (echo "==== Build failed: full gradle log ====" && sed -n '1,10000p' build-gradle.log && exit 1)
           echo "==== Gradle log tail ===="
           tail -n 200 build-gradle.log || true
 
