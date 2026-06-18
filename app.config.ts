@@ -26,6 +26,14 @@ const config: ExpoConfig = {
   },
   plugins: [
     "expo-router",
+    [
+      "expo-build-properties",
+      {
+        "android": {
+          "kotlinVersion": "1.9.24"
+        }
+      }
+    ]
   ],
 };
 
