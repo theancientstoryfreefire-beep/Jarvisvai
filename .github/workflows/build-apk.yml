@@ -60,6 +60,11 @@ jobs:
       - name: Prebuild Android
         run: npx expo prebuild --platform android --clean --no-install
 
+      - name: Set stable Gradle version
+        run: |
+          cd android
+          sed -i 's/gradle-9.3.1/gradle-8.4/g' gradle/wrapper/gradle-wrapper.properties
+
       - name: Make gradlew executable
         run: chmod +x android/gradlew || true
 

@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-  ext.kotlin_version = "1.9.25"
+  ext.kotlin_version = "1.8.10"
   repositories {
     google()
     mavenCentral()
@@ -29,12 +29,12 @@ allprojects {
       force 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
       
       // Force consistent Kotlin version to resolve attribute matching errors
-      force "org.jetbrains.kotlin:kotlin-stdlib:1.9.25"
-      force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.25"
-      force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.25"
-      force "org.jetbrains.kotlin:kotlin-reflect:1.9.25"
-      force "org.jetbrains.kotlin:kotlin-scripting-common:1.9.25"
-      force "org.jetbrains.kotlin:kotlin-scripting-jvm:1.9.25"
+      force "org.jetbrains.kotlin:kotlin-stdlib:1.8.10"
+      force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10"
+      force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.10"
+      force "org.jetbrains.kotlin:kotlin-reflect:1.8.10"
+      force "org.jetbrains.kotlin:kotlin-scripting-common:1.8.10"
+      force "org.jetbrains.kotlin:kotlin-scripting-jvm:1.8.10"
     }
   }
 }
