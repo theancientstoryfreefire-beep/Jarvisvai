@@ -83,7 +83,7 @@ jobs:
           cd android
           ./gradlew --stop || true
           chmod +x ./gradlew || true
-          ./gradlew assembleRelease --no-daemon --no-parallel --stacktrace --debug > build-gradle.log 2>&1 || (echo "==== Build failed: full gradle log ====" && cat build-gradle.log && exit 1)
+          ./gradlew assembleDebug --no-daemon --no-parallel --stacktrace --debug > build-gradle.log 2>&1 || (echo "==== Build failed: full gradle log ====" && cat build-gradle.log && exit 1)
           echo "==== Gradle log tail ===="
           tail -n 200 build-gradle.log || true
 
@@ -98,7 +98,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: jarvis-apk
-          path: android/app/build/outputs/apk/release/app-release.apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
       
       - name: Create Release
         if: success()
@@ -110,6 +110,6 @@ jobs:
             Jarvis AI Assistant APK
             
             Download the APK file below and install on your iQOO Neo 10R
-          files: android/app/build/outputs/apk/release/app-release.apk
+          files: android/app/build/outputs/apk/debug/app-debug.apk
           draft: false
           prerelease: false
