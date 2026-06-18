@@ -82,7 +82,6 @@ jobs:
         run: |
           cd android
           ./gradlew --stop || true
-          echo "org.gradle.jvmargs=-Xmx8192m -Dfile.encoding=UTF-8" >> gradle.properties
           chmod +x ./gradlew || true
           ./gradlew assembleRelease --no-daemon --no-parallel --stacktrace --debug > build-gradle.log 2>&1 || (echo "==== Build failed: full gradle log ====" && cat build-gradle.log && exit 1)
           echo "==== Gradle log tail ===="
