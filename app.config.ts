@@ -1,6 +1,4 @@
-import { ExpoConfig } from 'expo/config';
-
-const config: ExpoConfig = {
+const config = {
   name: 'Jarvis AI',
   slug: 'jarvis-ai',
   version: '1.0.0',
